@@ -44,8 +44,9 @@ public class VillagerListener extends AbstractListener<VTSPlugin> {
     public void onVillagerSpawn(CreatureSpawnEvent event) {
         if (event.getEntity() instanceof AbstractVillager villager) {
             if (Config.VILLAGER_SETTINGS_CLEAR_OTHER.get()) {
-                villager.setRecipes(new ArrayList<>());
+                villager.resetOffers();
             }
+            villager.getRecipes().forEach(merchantRecipe -> merchantRecipe.setIgnoreDiscounts(Config.DISABLED_ALL_DISCOUNTS.get()));
             this.addCustomRecipes(villager, false);
         }
     }
@@ -54,8 +55,9 @@ public class VillagerListener extends AbstractListener<VTSPlugin> {
     public void onProfessionChange(VillagerCareerChangeEvent event) {
         Villager villager = event.getEntity();
         if (Config.VILLAGER_SETTINGS_CLEAR_OTHER.get()) {
-            villager.setRecipes(new ArrayList<>());
+            villager.resetOffers();
         }
+        villager.getRecipes().forEach(merchantRecipe -> merchantRecipe.setIgnoreDiscounts(Config.DISABLED_ALL_DISCOUNTS.get()));
         this.addCustomRecipes(villager, false);
     }
 
@@ -71,9 +73,8 @@ public class VillagerListener extends AbstractListener<VTSPlugin> {
         if (!Config.SETTINGS_SPECIAL_PRICE.get()) {
             if (Version.isAbove(Version.V1_18_R2)) recipe.setSpecialPrice(0);
         }
-
         if (Config.DISABLE_PRICE_MULTIPLIER.get()) recipe.setPriceMultiplier(0);
-
+        if (Config.DISABLED_ALL_DISCOUNTS.get()) recipe.setIgnoreDiscounts(true);
         if (result.getType().isAir() || replacedVillagersCache.contains(villager.getUniqueId())) {
             return;
         }
@@ -159,19 +160,12 @@ public class VillagerListener extends AbstractListener<VTSPlugin> {
             Collections.shuffle(recipeItems);
 
             for (RecipeItem recipeItem : recipeItems) {
-                if (
-                  recipeItem.getProfession().isAllowed(villager)
-                    && !containsRecipe(recipeItem, merchantRecipes)
-                    && Rnd.chance(recipeItem.getChance())
-                ) {
-                    if (limit-- <= -1) {
-                        break;
-                    }
-                    MerchantRecipe merchantRecipe = new MerchantRecipe(recipeItem.getProduct(), recipeItem.getMaxUses());
-                    merchantRecipe.setIngredients(recipeItem.getSellItems());
-                    merchantRecipe.setExperienceReward(recipeItem.getExpReward() > 0);
-                    merchantRecipe.setVillagerExperience(recipeItem.getExpReward());
-                    merchantRecipe.setMaxUses(recipeItem.getMaxUses());
+                if (recipeItem.getProfession().isAllowed(villager)
+                  && !containsRecipe(recipeItem, merchantRecipes)
+                  && Rnd.chance(recipeItem.getChance())) {
+                    if (limit-- <= -1) break;
+
+                    MerchantRecipe merchantRecipe = getMerchantByRecipeItem(recipeItem);
                     merchantRecipes.add(merchantRecipe);
                 }
             }
@@ -179,8 +173,21 @@ public class VillagerListener extends AbstractListener<VTSPlugin> {
         }
     }
 
-    public boolean containsRecipe(@NotNull RecipeItem recipeItem, @NotNull List<MerchantRecipe> recipes) {
-        return recipes.stream()
-                      .anyMatch(merchantRecipe -> merchantRecipe.getResult().isSimilar(recipeItem.getProduct()));
+    @NotNull
+    private MerchantRecipe getMerchantByRecipeItem(@NotNull RecipeItem recipeItem) {
+        MerchantRecipe merchantRecipe = new MerchantRecipe(recipeItem.getProduct(), recipeItem.getMaxUses());
+        merchantRecipe.setIngredients(recipeItem.getSellItems());
+        merchantRecipe.setExperienceReward(recipeItem.getExpReward() > 0);
+        merchantRecipe.setVillagerExperience(recipeItem.getExpReward());
+        merchantRecipe.setMaxUses(recipeItem.getMaxUses());
+        merchantRecipe.setIgnoreDiscounts(recipeItem.isDiscounts());
+        return merchantRecipe;
+    }
+
+    private boolean containsRecipe(@NotNull RecipeItem recipeItem, @NotNull List<MerchantRecipe> recipes) {
+        return recipes.stream().anyMatch(merchantRecipe -> {
+            ItemStack product = recipeItem.getProduct();
+            return merchantRecipe.getResult().isSimilar(product);
+        });
     }
 }
