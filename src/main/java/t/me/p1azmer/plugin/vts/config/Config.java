@@ -25,13 +25,16 @@ public class Config {
       "Sets a limit on adding custom recipes to the trader",
       "Be careful, because if the chance of items is low and you have a limit,",
       "then a resident may not get more than one custom recipe");
-    public static final JOption<Boolean> VILLAGER_SETTINGS_ADD_CUSTOM_ONE_TIME = JOption.create(
-      "Settings.Villager.Recipe.One_Time",
-      true,
-      "Sets whether custom recipes will be added only when the merchant spawns or when it is updated too.");
+    public static final JOption<Boolean> DISABLED_ALL_DISCOUNTS = JOption.create(
+      "Settings.Villager.Recipe.Discount.Disabled_All",
+      false,
+      "Sets whether discounts on all recipes will be disabled.",
+      "You can include discounts on your own recipes using the /vts editor");
     public static final JOption<Boolean> SETTINGS_DEMAND = JOption.create(
       "Settings.Demand.Enabled",
       false,
+      "The feature is available on versions above 1.18!",
+      "",
       "Sets whether merchant demand is enabled/disabled",
       "Doc.Info:",
       "Demand: This value is periodically updated by the villager that owns this merchant recipe based on",
@@ -41,6 +44,8 @@ public class Config {
     public static final JOption<Boolean> SETTINGS_SPECIAL_PRICE = JOption.create(
       "Settings.Special_Price.Enabled",
       false,
+      "The feature is available on versions above 1.18!",
+      "",
       "Sets whether merchant special price is enabled/disabled",
       "Doc.Info:",
       "Special price: This value is dynamically updated whenever a player starts and stops trading with",

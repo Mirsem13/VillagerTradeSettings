@@ -79,6 +79,17 @@ public class EditorLocales extends t.me.p1azmer.engine.api.editor.EditorLocales 
       .current("Value", Placeholders.RECIPE_CHANCE + GRAY + " (" + WHITE + LMB + GRAY + ")")
       .build();
 
+    public static final EditorLocale RECIPE_DISCOUNT = builder(PREFIX + "Recipe.Discount")
+      .name("Discount")
+      .text(
+        "Sets whether there will be",
+        "discounts on this recipe"
+      )
+      .emptyLine()
+      .currentHeader()
+      .current("Value", Placeholders.RECIPE_DISCOUNT + GRAY + " (" + WHITE + LMB + GRAY + ")")
+      .build();
+
     public static final EditorLocale RECIPE_MAX_USES = builder(PREFIX + "Recipe.Max_Uses")
       .name("Max Uses")
       .text("Sets how many uses are", "available for this recipe")

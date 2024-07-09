@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import t.me.p1azmer.engine.api.config.JYML;
 import t.me.p1azmer.engine.api.manager.AbstractConfigHolder;
+import t.me.p1azmer.engine.lang.LangManager;
 import t.me.p1azmer.engine.utils.placeholder.Placeholder;
 import t.me.p1azmer.engine.utils.placeholder.PlaceholderMap;
 import t.me.p1azmer.plugin.vts.Placeholders;
@@ -18,6 +19,7 @@ import t.me.p1azmer.plugin.vts.recipeitems.editor.RecipeItemEditorMain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -29,10 +31,11 @@ public class RecipeItem extends AbstractConfigHolder<VTSPlugin> implements Place
     private int expReward;
     private int maxUses;
     private double chance;
+    private boolean discounts;
     private Profession profession;
     private List<ItemStack> sellItems;
 
-    private final PlaceholderMap placeholderMap;
+    private final PlaceholderMap placeholders;
 
     public RecipeItem(@NotNull VTSPlugin plugin, @NotNull JYML cfg) {
         super(plugin, cfg);
@@ -41,12 +44,14 @@ public class RecipeItem extends AbstractConfigHolder<VTSPlugin> implements Place
         this.limitPerVillager = 3;
         this.maxUses = 5;
         this.expReward = 2;
+        this.discounts = false;
         this.profession = Profession.CARTOGRAPHER;
-        this.sellItems = new ArrayList<>();
+        this.sellItems = Collections.emptyList();
 
-        this.placeholderMap = new PlaceholderMap()
+        this.placeholders = new PlaceholderMap()
           .add(Placeholders.RECIPE_ID, this::getId)
           .add(Placeholders.RECIPE_CHANCE, () -> String.valueOf(this.getChance()))
+          .add(Placeholders.RECIPE_DISCOUNT, () -> LangManager.getBoolean(this.isDiscounts()))
           .add(Placeholders.RECIPE_MAX_USES, () -> String.valueOf(this.getMaxUses()))
           .add(Placeholders.RECIPE_EXP_REWARD, () -> String.valueOf(this.getExpReward()))
           .add(Placeholders.RECIPE_LIMIT_PER_VILLAGER, () -> String.valueOf(this.getLimitPerVillager()))
@@ -59,6 +64,7 @@ public class RecipeItem extends AbstractConfigHolder<VTSPlugin> implements Place
         this.chance = cfg.getDouble("Chance");
         this.limitPerVillager = cfg.getInt("Limit_Per_Villager");
         this.maxUses = cfg.getInt("Max_Uses");
+        this.discounts = cfg.getBoolean("Discounts");
         this.expReward = cfg.getInt("Exp_Reward");
         this.profession = cfg.getEnum("Profession", Profession.class, Profession.CARTOGRAPHER);
 
@@ -74,6 +80,7 @@ public class RecipeItem extends AbstractConfigHolder<VTSPlugin> implements Place
         cfg.set("Chance", this.getChance());
         cfg.set("Limit_Per_Villager", this.getLimitPerVillager());
         cfg.set("Max_Uses", this.getMaxUses());
+        cfg.set("Discounts", this.isDiscounts());
         cfg.set("Exp_Reward", this.getExpReward());
         cfg.set("Profession", this.getProfession());
 
@@ -100,13 +107,12 @@ public class RecipeItem extends AbstractConfigHolder<VTSPlugin> implements Place
         return new ItemStack(product);
     }
 
-    @Override
-    public @NotNull PlaceholderMap getPlaceholders() {
-        return this.placeholderMap;
-    }
-
     public boolean isAllowedToAdd(@NotNull ItemStack item) {
-        return !this.getProduct().getType().equals(item.getType()) && this.getSellItems().stream().noneMatch(found -> found.getType().equals(item.getType()));
+        Material itemType = item.getType();
+        Material productType = this.getProduct().getType();
+        return !productType.equals(itemType) && this.getSellItems()
+                                                    .stream()
+                                                    .noneMatch(found -> found.getType().equals(itemType));
     }
 
 

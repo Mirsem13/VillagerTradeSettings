@@ -66,7 +66,7 @@ public class RecipeItemEditorMain extends EditorMenu<VTSPlugin, RecipeItem> impl
             });
         }));
 
-        this.addItem(Material.DROPPER, EditorLocales.RECIPE_CHANCE, 3).setClick((viewer, event) -> {
+        this.addItem(Material.DROPPER, EditorLocales.RECIPE_CHANCE, 2).setClick((viewer, event) -> {
             this.handleInput(viewer, Lang.Generic_Write_Value, wrapper -> {
                 double chance = wrapper.asDouble(1);
                 this.object.setChance(chance);
@@ -75,6 +75,10 @@ public class RecipeItemEditorMain extends EditorMenu<VTSPlugin, RecipeItem> impl
             });
         });
 
+        this.addItem(Material.GOLD_BLOCK, EditorLocales.RECIPE_DISCOUNT, 3).setClick((viewer, event) -> {
+            recipeItem.setDiscounts(!recipeItem.isDiscounts());
+            this.save(viewer);
+        });
         this.addItem(Material.TOTEM_OF_UNDYING, EditorLocales.RECIPE_MAX_USES, 4).setClick((viewer, event) -> {
             this.handleInput(viewer, Lang.Generic_Write_Value, wrapper -> {
                 int amount = wrapper.asInt(1);
@@ -92,7 +96,7 @@ public class RecipeItemEditorMain extends EditorMenu<VTSPlugin, RecipeItem> impl
             });
         });
 
-        this.addItem(Material.BOOK, EditorLocales.RECIPE_PROFESSION, 13).setClick((viewer, event) -> {
+        this.addItem(Material.BOOK, EditorLocales.RECIPE_PROFESSION, 6).setClick((viewer, event) -> {
             EditorManager.suggestValues(viewer.getPlayer(), Lists.getEnums(RecipeItem.Profession.class), true);
 
             this.handleInput(viewer, Lang.Editor_Recipe_Enter_Profession, wrapper -> {

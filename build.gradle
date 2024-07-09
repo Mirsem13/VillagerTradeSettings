@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.github.getplusm'
-version = '2.0.3'
+version = '2.0.4'
 
 repositories {
     mavenLocal()
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT"
     compileOnly 'com.github.getplusm:PLAZMER-ENGINE:2.4.7'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'

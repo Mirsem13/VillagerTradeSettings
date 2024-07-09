@@ -1,5 +1,7 @@
 package t.me.p1azmer.plugin.vts.recipeitems.editor.sellitems;
 
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -24,14 +26,17 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class RISellItemsListEditor extends EditorMenu<VTSPlugin, RecipeItem> implements AutoPaged<ItemStack> {
+    private static final ItemStack EMPTY_SLOT = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+
+    static {
+        ItemUtil.editMeta(EMPTY_SLOT, meta -> meta.displayName(Component.empty()));
+    }
 
     public RISellItemsListEditor(@NotNull RecipeItem recipeItem) {
         super(recipeItem.plugin(), recipeItem, Config.RECIPE_EDITOR_GUI_NAME.get(), 5);
         this.getOptions().setType(InventoryType.BREWING);
 
-        this.addReturn(3).setClick((viewer, event) -> {
-            recipeItem.getEditor().openNextTick(viewer, 4);
-        });
+        this.addReturn(3).setClick((viewer, event) -> recipeItem.getEditor().openAsync(viewer, 1));
 
         this.addCreation(EditorLocales.CREATE_ITEM, 2).setClick((viewer, event) -> {
             ItemStack cursor = event.getCursor();
@@ -50,6 +55,7 @@ public class RISellItemsListEditor extends EditorMenu<VTSPlugin, RecipeItem> imp
                 this.save(viewer);
             }
         });
+        this.addItem(EMPTY_SLOT, 4);
     }
 
     private void save(@NotNull MenuViewer viewer) {
