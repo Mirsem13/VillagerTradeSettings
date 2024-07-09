@@ -1,0 +1,157 @@
+# Here you can create your own custom placeholders to use it in language config.
+# Key = Placeholder, Value = Replacer.
+Placeholders:
+  '%green%': '#74ea31'
+  '%gray%': '#aaa8a8'
+  '%red%': '#ea3131'
+Command:
+  Editor:
+    Desc: Open the editor.
+Editor:
+  Trade_Item:
+    Enter:
+      Create: '#aaa8a8Enter #74ea31unique #aaa8a8trade item #74ea31identifier#aaa8a8...'
+    Error:
+      Exist: '#ea3131Trade item already exists!'
+  Error:
+    Items_Limit: '#ea3131The number of items cannot exceed 2'
+    Items_Already: '#ea3131Such material has already been added to this recipe!'
+  Recipe:
+    Enter:
+      Create: '#aaa8a8Enter #74ea31unique #aaa8a8recipe #74ea31identifier#aaa8a8...'
+      Profession: '#aaa8a8Enter #74ea31Villager Profession#aaa8a8...'
+    Error:
+      Exist: '#ea3131Recipe already exists!'
+    Object:
+      Name: '#ead931&l#e8f2f2%recipe_id%'
+      Lore:
+      - ''
+      - '#aaa8a8(#e8f2f2Left-Click#aaa8a8 to Configure#aaa8a8)'
+      - '#aaa8a8(#e8f2f2Shift-Right#aaa8a8 to Delete #ea3131(No Undo)#aaa8a8)'
+    Product:
+      Create:
+        Name: '#ead931&lNew Product'
+        Lore: []
+      Object:
+        Name: '#ead931&lProduct'
+        Lore:
+        - ''
+        - '#aaa8a8Sets the item to be added as'
+        - '#aaa8a8a product to the trader'
+        - ''
+        - '#aaa8a8(#e8f2f2Drag & Drop#aaa8a8 to Replace Item#aaa8a8)'
+        - '#aaa8a8(#e8f2f2Right-Click#aaa8a8 to Get a Copy#aaa8a8)'
+    Chance:
+      Name: '#ead931&lChance'
+      Lore:
+      - '#aaa8a8Sets the chance with which this'
+      - '#aaa8a8item will be added to the trader'
+      - ''
+      - '#ead931&lCurrent:'
+      - '#ead931▪ #aaa8a8Value: #ead931%recipe_chance%#aaa8a8 (#e8f2f2Left-Click#aaa8a8)'
+    Max_Uses:
+      Name: '#ead931&lMax Uses'
+      Lore:
+      - '#aaa8a8Sets how many uses are'
+      - '#aaa8a8available for this recipe'
+      - ''
+      - '#ead931&lCurrent:'
+      - '#ead931▪ #aaa8a8Value: #ead931%recipe_max_uses%#aaa8a8 (#e8f2f2Left-Click#aaa8a8)'
+    Exp_Reward:
+      Name: '#ead931&lExperience Reward'
+      Lore:
+      - '#aaa8a8Sets the amount of experience the'
+      - '#aaa8a8villager earns from this recipe'
+      - ''
+      - '#ead931&lCurrent:'
+      - '#ead931▪ #aaa8a8Value: #ead931%recipe_exp_reward%#aaa8a8 (#e8f2f2Left-Click#aaa8a8)'
+    Profession:
+      Name: '#ead931&lVillager Profession'
+      Lore:
+      - '#aaa8a8Sets the profession to which'
+      - '#aaa8a8this product will be added'
+      - ''
+      - '#ead931&lCurrent:'
+      - '#ead931▪ #aaa8a8Profession: #ead931%recipe_profession%#aaa8a8 (#e8f2f2Left-Click#aaa8a8)'
+    Sell_Items:
+      Object:
+        Name: '#ead931&lSell Items'
+        Lore:
+        - '#aaa8a8Sets the items that will be used'
+        - '#aaa8a8as a way to purchase an item from #ffeea2Product'
+        - ''
+        - '#aaa8a8(#e8f2f2Left-Click#aaa8a8 to Configure#aaa8a8)'
+        - '#aaa8a8(#e8f2f2Shift-Right#aaa8a8 to Clear#aaa8a8)'
+  Generic:
+    Write:
+      Value: '#aaa8a8Enter #74ea31value#aaa8a8...'
+  Villager:
+    Name: '#ead931&lVillager'
+    Lore:
+    - '#aaa8a8Setup villagers trade items here'
+    Trade:
+      Product:
+        Create:
+          Name: '#ead931&lNew Product'
+          Lore: []
+        Object:
+          Name: '#ead931&lProduct'
+          Lore:
+          - ''
+          - '#aaa8a8Sets the product for which we'
+          - '#aaa8a8will change the purchase items'
+          - ''
+          - '#aaa8a8(#e8f2f2Drag & Drop#aaa8a8 to Replace Item#aaa8a8)'
+          - '#aaa8a8(#e8f2f2Right-Click#aaa8a8 to Get a Copy#aaa8a8)'
+      Item:
+        Object:
+          Name: '#ead931&l#e8f2f2%trade_item_id%'
+          Lore:
+          - ''
+          - '#aaa8a8(#e8f2f2Left-Click#aaa8a8 to Configure#aaa8a8)'
+          - '#aaa8a8(#e8f2f2Shift-Right#aaa8a8 to Delete #ea3131(No Undo)#aaa8a8)'
+      Sell_Items:
+        Object:
+          Name: '#ead931&lSell Items'
+          Lore:
+          - '#aaa8a8Sets the items that will be used'
+          - '#aaa8a8as a way to purchase an item from #ffeea2Product'
+          - ''
+          - '#aaa8a8(#e8f2f2Left-Click#aaa8a8 to Configure#aaa8a8)'
+          - '#aaa8a8(#e8f2f2Shift-Right#aaa8a8 to Clear#aaa8a8)'
+      Replaced_Items:
+        Object:
+          Name: '#ead931&lReplaced Items'
+          Lore:
+          - '#aaa8a8#e8f2f2Sets the items to be replaced with Sell items'
+          - '#aaa8a8'
+          - '#aaa8a8#ea3131If this list is empty#aaa8a8,'
+          - '#aaa8a8#aaa8a8then all items will be replaced'
+          - '#aaa8a8#aaa8a8with items from Sell Items'
+          - ''
+          - '#aaa8a8(#e8f2f2Left-Click#aaa8a8 to Configure#aaa8a8)'
+          - '#aaa8a8(#e8f2f2Shift-Right#aaa8a8 to Clear#aaa8a8)'
+  Items:
+    Object:
+      Name: ''
+      Lore:
+      - ''
+      - '#aaa8a8(#e8f2f2Shift-Right#aaa8a8 to #ea3131Remove#aaa8a8)'
+    Create:
+      Name: '#ead931&l#74ea31New Item#aaa8a8 (#e8f2f2Drag & Drop#aaa8a8)'
+      Lore: []
+Profession:
+  WANDERING: Wandering
+  ARMORER: Armorer
+  BUTCHER: Butcher
+  CARTOGRAPHER: Cartographer
+  CLERIC: Cleric
+  FARMER: Farmer
+  FISHERMAN: Fisherman
+  FLETCHER: Fletcher
+  LEATHERWORKER: Leatherworker
+  LIBRARIAN: Librarian
+  MASON: Mason
+  SHEPHERD: Shepherd
+  TOOLSMITH: Toolsmith
+  WEAPONSMITH: Weaponsmith
