@@ -20,10 +20,10 @@ public class EditorMainMenu extends EditorMenu<VTSPlugin, VTSPlugin> {
 
         this.addExit(22);
 
-        this.addItem(ItemUtil.getSkinHead(TEXTURE_VILLAGER), EditorLocales.VILLAGER_EDITOR, 11)
-            .setClick((viewer, event) -> this.getTradeItemEditor().openNextTick(viewer.getPlayer(), 1));
+        this.addItem(ItemUtil.createCustomHead(TEXTURE_VILLAGER), EditorLocales.VILLAGER_EDITOR, 11)
+            .setClick((viewer, event) -> this.getTradeItemEditor().openAsync(viewer.getPlayer(), 1));
         this.addItem(Material.WRITTEN_BOOK, EditorLocales.RECIPE_EDITOR, 15)
-            .setClick((viewer, event) -> this.getRecipeItemEditorList().openNextTick(viewer.getPlayer(), 1));
+            .setClick((viewer, event) -> this.getRecipeItemEditorList().openAsync(viewer.getPlayer(), 1));
     }
 
     @Override
