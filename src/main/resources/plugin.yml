@@ -1,0 +1,9 @@
+name: VillagerTradeSettings
+version: '${version}'
+main: t.me.p1azmer.plugin.vts.VTSPlugin
+api-version: 1.21
+author: "plazmer"
+website: "t.me/p1azmer"
+description: "Settings your villagers"
+folia-supported: true
+softdepend: [ PLAZMER-ENGINE ]
